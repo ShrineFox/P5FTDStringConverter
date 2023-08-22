@@ -3,8 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Amicitia.IO\src\Amicitia.IO\Amicitia.IO.csproj" />
+    <ProjectReference Include="..\..\Atlus-Script-Tools\Source\AtlusScriptLibrary\AtlusScriptLibrary.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Amicitia.IO">

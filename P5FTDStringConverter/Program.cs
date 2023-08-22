@@ -20,7 +20,7 @@ namespace P5FTDStringConverter
                 FileInfo arg0 = new FileInfo(args[0]);
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-                if (arg0.Extension == ".ftd")
+                if (arg0.Extension.ToLower() == ".ftd")
                 {
                     Console.WriteLine($"Attempting to convert { arg0.Name }");
                     List<UInt32> StringPointers = new List<UInt32>();
@@ -56,10 +56,10 @@ namespace P5FTDStringConverter
                         Console.WriteLine($"File saved to {savePath}");
                     }
                 }
-                else if (arg0.Extension == ".txt")
+                else if (arg0.Extension.ToLower() == ".txt")
                 {
                     Console.WriteLine($"Attempting to convert { arg0.Name }");
-                    string[] readText = File.ReadAllLines(arg0.FullName, AtlusEncoding.Persona5RoyalEFIGS);
+                    string[] readText = File.ReadAllLines(arg0.FullName);
                     var savePath = Path.Combine(Path.GetDirectoryName(args[0]), Path.GetFileNameWithoutExtension(arg0.FullName) + ".ftd");
 
                     using (BinaryObjectWriter ftdfile = new BinaryObjectWriter(savePath, Endianness.Big, AtlusEncoding.Persona5RoyalEFIGS))
@@ -99,7 +99,7 @@ namespace P5FTDStringConverter
                             ftdfile.WriteByte((byte)strLen);
                             ftdfile.WriteByte(1);
                             ftdfile.WriteUInt16(0);
-                            ftdfile.WriteString(StringBinaryFormat.FixedLength, s, s.Length);
+                            ftdfile.WriteString(StringBinaryFormat.NullTerminated, s, s.Length);
                             ftdfile.WriteByte(0);
 
                             targetPadding = (int)((0x10 - ftdfile.Position % 0x10) % 0x10);
